@@ -52,7 +52,7 @@ var gatherLinks = function (subreddit, page) {
 					// RedditLink.find().where({linkId: parsedBody.data.children[i].data.id}).exec(handler);
 
 					sails.log(i);
-					sails.log(parsedBody.data.children[i]);
+					// sails.log(parsedBody.data.children[i]);
 
 					var redditLink = {
 
