@@ -30,8 +30,7 @@ var gatherLinks = function (subreddit, page) {
 
 				var parsedBody = JSON.parse(body);
 
-				sails.log(parsedBody);
-				sails.log(parsedBody.data.children[i]);
+				// sails.log(parsedBody);
 
 				var i;
 				var length = parsedBody.data.children.length;
@@ -45,6 +44,9 @@ var gatherLinks = function (subreddit, page) {
 						if(redditLinks.length < 0) {
 							sails.log("already added link")
 						} else {
+
+							sails.log(parsedBody.data.children[i]);
+
 							var redditLink = {
 
 								linkId: parsedBody.data.children[i].data.id,
