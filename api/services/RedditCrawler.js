@@ -96,7 +96,7 @@ var gatherLinks = function (subreddit, count) {
 
 
 
-var createComment = function (redditLink, commment) {
+var createComment = function (redditLink, comment) {
 
 	var commentToSave = {
 		permalink: redditLink.permalink,
