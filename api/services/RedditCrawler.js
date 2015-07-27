@@ -158,6 +158,8 @@ var gatherComments = function (redditlink) {
 		redditBottle.submit(Request, apiCall, function (error, response, body) {
 
 			if(!error && response.statusCode === 200) {
+
+				sails.log(body);
 				var parsedBody = JSON.parse(body);
 
 				var commentsToParse = parsedBody[1].data.children;
