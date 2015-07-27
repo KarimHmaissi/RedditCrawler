@@ -186,7 +186,7 @@ var gatherComments = function (redditlink) {
 
 
 					// check if has comment children
-					if(parsedComment.data.replies === "") {
+					if(!parsedComment.data.replies === "") {
 						// comment has replies
 						sails.log("comment has replies");
 						parseCommentReplies(redditlink, parsedComment.data.replies);
