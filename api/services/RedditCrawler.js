@@ -4,7 +4,7 @@ var Request = require("request");
 
 var Bottleneck = require("bottleneck");
 
-var redditBottle = new Bottleneck(1, 2500);;
+var redditBottle = new Bottleneck(1, 3000);
 
 var afterThisPost = "";
 
@@ -114,6 +114,8 @@ var createComment = function (redditLink, comment) {
 
 
 var parseCommentReplies = function (redditLink, replies) {
+	sails.log("hit parseCommentReplies");
+
 	var comments = replies.data.children;
 
 	sails.log(comments);
@@ -150,6 +152,8 @@ var checkComment = function (commentData) {
 }
 
 var gatherComments = function (redditLink) {
+
+	sails.log("called gather comments")
 
 	var apiCall = "https://reddit.com" + redditLink.permalink + ".json";;
 
@@ -223,13 +227,14 @@ module.exports = {
 		return new Promise(function (fulfill, reject) {
 
 			var handler = function (links) {
-				// Promise.each(links, function (redditLink) {
-				// 	return gatherComments(redditLink);
+				Promise.each(links, function (redditLink) {
+					sails.log("found :" + RedditLink.length + " links");
+					return gatherComments(redditLink);
 
-				// }).then(fulfill);
+				}).then(fulfill);
 			// sails.log(links);
 
-				return gatherComments(links[0]);
+				// return gatherComments(links[0]);
 				// fulfill("something");
 			}
 
