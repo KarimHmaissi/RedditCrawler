@@ -12,6 +12,8 @@ var gatherLinks = function (subreddit, page) {
 
 	var apiCall = "http://reddit.com/r/" + subreddit + "/top.json#page=" + page;
 
+	var savedLinks = [];
+
 
 	var saveLink = function (redditLink) {
 		RedditLink.create(link).exec(function (redditLink) {
@@ -51,6 +53,8 @@ var gatherLinks = function (subreddit, page) {
 
 							};
 
+							savedLinks.push(redditLink);
+
 							saveLink(redditLink);
 						}
 
@@ -62,6 +66,8 @@ var gatherLinks = function (subreddit, page) {
 
 				}
 
+
+				fulfill(savedLinks);
 				
 
 			}
@@ -85,10 +91,10 @@ var gatherComments =function (subreddit) {
 module.exports = {
 	crawlReddit: function (subreddit) {
 		
-		return new Promise(function (fulfill, reject) {
+		// return new Promise(function (fulfill, reject) {
 
 			//crawl links and save to db 
-			gatherLinks("javascript", 1)
+			return gatherLinks("javascript", 1)
 
 
 			//gather comments and save to db
@@ -96,7 +102,7 @@ module.exports = {
 
 
 
-		});
+		// });
 
 	}
 }
