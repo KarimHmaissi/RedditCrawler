@@ -24,7 +24,7 @@ var gatherLinks = function (subreddit, page) {
 	return new Promise(function (fulfill, reject) {
 
 		
-		redditBottle(Request, apiCall, function (error, response, body) {
+		redditBottle.submit(Request, apiCall, function (error, response, body) {
 			
 			if(!error && response.statusCode === 200) {
 
