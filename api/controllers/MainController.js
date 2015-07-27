@@ -6,7 +6,7 @@ module.exports = {
 			res.json(links)
 		});
 
-	}
+	},
 
 	start: function (req, res) {
 		
