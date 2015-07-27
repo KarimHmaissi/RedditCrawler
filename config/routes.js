@@ -36,7 +36,8 @@ module.exports.routes = {
     view: 'homepage'
   },
 
-  '/api/start/:subreddit': 'MainController.start'
+  'get /api/start/:subreddit': 'MainController.start'
+  'get /api/links/': 'MainController.get'
 
   /***************************************************************************
   *                                                                          *
