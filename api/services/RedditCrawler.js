@@ -30,6 +30,9 @@ var gatherLinks = function (subreddit, page) {
 
 				var parsedBody = JSON.parse(body);
 
+				sails.log(parsedBody);
+				sails.log(parsedBody.data.children[i]);
+
 				var i;
 				var length = parsedBody.data.children.length;
 
