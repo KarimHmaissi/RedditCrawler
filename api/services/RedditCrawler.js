@@ -8,7 +8,7 @@ var redditBottle = new Bottleneck(1, 3000);
 
 var afterThisPost = "";
 
-var minLength = 200;
+var minLength = 400;
 var minUpvotes = 10;
 
 var createLink = function (redditLink) {
@@ -186,7 +186,7 @@ var gatherComments = function (redditLink) {
 
 			
 					//check comment body length and upvotes
-					sails.log("checking comment ....");
+					// sails.log("checking comment ....");
 					if(checkComment(parsedComment.data)) {
 						sails.log("comment has passed checks and will be saved");
 						createComment(redditLink, parsedComment.data);
@@ -194,7 +194,8 @@ var gatherComments = function (redditLink) {
 
 
 					// check if has comment children
-					if(!parsedComment.data.replies === "") {
+					sails.log("checking if comment has replies........");
+					if(typeof parsedComment.data.replies === "object") {
 						// comment has replies
 						sails.log("comment has replies");
 						parseCommentReplies(redditLink, parsedComment.data.replies);
