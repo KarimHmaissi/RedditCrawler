@@ -12,7 +12,7 @@ var minLength = 200;
 var minUpvotes = 10;
 
 var createLink = function (redditLink) {
-	redditLink.create(redditLink).then(function (savedLink) {
+	RedditLink.create(redditLink).then(function (savedLink) {
 		sails.log("saved link: " + savedLink.linkId);
 	}).catch(sails.log);
 };
@@ -230,7 +230,7 @@ module.exports = {
 				// fulfill("something");
 			}
 
-			redditLink.find().then(handler).catch(sails.log);
+			RedditLink.find().then(handler).catch(sails.log);
 
 		});
 
