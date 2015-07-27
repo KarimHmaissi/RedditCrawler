@@ -16,9 +16,9 @@ var gatherLinks = function (subreddit, page) {
 
 
 	var saveLink = function (redditLink) {
-		RedditLink.create(redditLink).exec(function (savedLink) {
+		RedditLink.create(redditLink).then(function (savedLink) {
 			sails.log("saved link: " + savedLink.linkId);
-		});	
+		}).catch(sails.log);
 	};
 
 	return new Promise(function (fulfill, reject) {
