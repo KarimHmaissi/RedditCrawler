@@ -75,7 +75,7 @@ var gatherLinks = function (subreddit, count) {
 						sails.log("reached end adding after id: " + afterThisPost);
 					}
 
-					createLink.push(redditLink);
+					savedLinks.push(redditLink);
 
 					saveLink(redditLink);
 
