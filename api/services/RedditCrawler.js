@@ -18,9 +18,9 @@ var createLink = function (redditLink) {
 };
 
 var saveLink = function (redditLink) {
-	redditLink.save().then(function (savedLink) {
-		// sails.log("saved link: " + savedLink.linkId);
-	}).catch(sails.log);
+	redditLink.save(function (savedLink) {
+		sails.log("saved link: " + savedLink.linkId);
+	});
 };
 
 
@@ -77,7 +77,7 @@ var gatherLinks = function (subreddit, count) {
 
 					savedLinks.push(redditLink);
 
-					saveLink(redditLink);
+					createLink(redditLink);
 
 				}
 
