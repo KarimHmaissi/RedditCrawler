@@ -159,7 +159,7 @@ var gatherComments = function (redditlink) {
 
 			if(!error && response.statusCode === 200) {
 
-				sails.log(body);
+				// sails.log(body);
 				var parsedBody = JSON.parse(body);
 
 				var commentsToParse = parsedBody[1].data.children;
