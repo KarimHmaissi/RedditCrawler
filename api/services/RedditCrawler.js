@@ -20,7 +20,9 @@ var createLink = function (redditLink) {
 var saveLink = function (redditLink) {
 	redditLink.save(function (savedLink) {
 		sails.log("saved link: " + savedLink.linkId);
-	});
+	}), function (err) {
+		sails.log(err);
+	};
 };
 
 
