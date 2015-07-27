@@ -225,7 +225,7 @@ module.exports = {
 				fulfill("something");
 			}
 
-			RedditLink.find().where().exec(handler);
+			RedditLink.find().then(handler).catch(sails.log);
 
 		});
 
