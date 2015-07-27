@@ -186,6 +186,7 @@ var gatherComments = function (redditLink) {
 
 			
 					//check comment body length and upvotes
+					sails.log("checking comment ....");
 					if(checkComment(parsedComment.data)) {
 						sails.log("comment has passed checks and will be saved");
 						createComment(redditLink, parsedComment.data);
@@ -197,6 +198,8 @@ var gatherComments = function (redditLink) {
 						// comment has replies
 						sails.log("comment has replies");
 						parseCommentReplies(redditLink, parsedComment.data.replies);
+					} else {
+						sails.log("comment has no replies");
 					}
 	
 
@@ -227,8 +230,11 @@ module.exports = {
 		return new Promise(function (fulfill, reject) {
 
 			var handler = function (links) {
+
+				sails.log("found :" + links.length + " links");
+
 				Promise.each(links, function (redditLink) {
-					sails.log("found :" + RedditLink.length + " links");
+					sails.log("checking new link: " + redditLink.id);
 					return gatherComments(redditLink);
 
 				}).then(fulfill);
