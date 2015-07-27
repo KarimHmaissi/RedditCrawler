@@ -158,6 +158,9 @@ var gatherComments = function (redditLink) {
 		//download comments
 		redditBottle.submit(Request, apiCall, function (error, response, body) {
 
+			sails.log(error);
+			sails.log(response.statusCode);
+
 			if(!error && response.statusCode === 200) {
 
 				// sails.log(body);
