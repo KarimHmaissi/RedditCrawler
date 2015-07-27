@@ -12,7 +12,7 @@ var minLength = 200;
 var minUpvotes = 10;
 
 var createLink = function (redditLink) {
-	RedditLink.create(redditLink).then(function (savedLink) {
+	redditLink.create(redditLink).then(function (savedLink) {
 		sails.log("saved link: " + savedLink.linkId);
 	}).catch(sails.log);
 };
@@ -126,14 +126,14 @@ var parseCommentReplies = function (redditLink, replies) {
 
 		if(checkComment(comment.data)) {
 			sails.log("A replied comment has passed check and will be saved");
-			createComment(redditlink, comment.data);
+			createComment(redditLink, comment.data);
 		}
 
 		// check if has comment children
 		if(!comment.data.replies === "") {
 			// comment has replies
 			sails.log("comment has replies");
-			parseCommentReplies(redditlink, comment.data.replies);
+			parseCommentReplies(redditLink, comment.data.replies);
 		}
 
 	}
@@ -149,9 +149,9 @@ var checkComment = function (commentData) {
 	}
 }
 
-var gatherComments = function (redditlink) {
+var gatherComments = function (redditLink) {
 
-	var apiCall = "https://reddit.com" + redditlink.permalink + ".json";;
+	var apiCall = "https://reddit.com" + redditLink.permalink + ".json";;
 
 	return new Promise(function (fulfill, reject) {
 
@@ -181,7 +181,7 @@ var gatherComments = function (redditlink) {
 					//check comment body length and upvotes
 					if(checkComment(parsedComment.data)) {
 						sails.log("comment has passed checks and will be saved");
-						createComment(redditlink, parsedComment.data);
+						createComment(redditLink, parsedComment.data);
 					}
 
 
@@ -189,7 +189,7 @@ var gatherComments = function (redditlink) {
 					if(!parsedComment.data.replies === "") {
 						// comment has replies
 						sails.log("comment has replies");
-						parseCommentReplies(redditlink, parsedComment.data.replies);
+						parseCommentReplies(redditLink, parsedComment.data.replies);
 					}
 	
 
@@ -197,7 +197,7 @@ var gatherComments = function (redditlink) {
 				}
 
 				redditLink.checked = true;
-				saveLink(redditlink);
+				saveLink(redditLink);
 
 				fulfill();
 			}
@@ -230,7 +230,7 @@ module.exports = {
 				// fulfill("something");
 			}
 
-			RedditLink.find().then(handler).catch(sails.log);
+			redditLink.find().then(handler).catch(sails.log);
 
 		});
 
