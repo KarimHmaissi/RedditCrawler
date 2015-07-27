@@ -2,7 +2,7 @@ module.exports = {
 
 	get: function (req, res) {
 		
-		RedditLink.find().exec(function (links) {
+		RedditLink.find().exec(function (err, links) {
 			res.json(links)
 		});
 
