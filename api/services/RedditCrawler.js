@@ -100,7 +100,7 @@ var createComment = function (redditLink, commment) {
 
 	var commentToSave = {
 		permalink: redditLink.permalink,
-		linkId: redditlink.linkId,
+		linkId: redditLink.linkId,
 
 		commentId: comment.id,
 		body: comment.body,
