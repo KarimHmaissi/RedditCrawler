@@ -149,8 +149,10 @@ var checkComment = function (commentData) {
 }
 
 var gatherComments = function (redditlink) {
-	return new Promise(function (fulfill, reject) {
 
+	var apiCall = "https://reddit.com" + redditlink.permalink;
+
+	return new Promise(function (fulfill, reject) {
 
 		//download comments
 		redditBottle.submit(Request, apiCall, function (error, response, body) {
