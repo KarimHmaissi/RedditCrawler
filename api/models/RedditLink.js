@@ -11,6 +11,8 @@ var RedditLink = {
 		title: {type: "string"},
 		subreddit: {type: "string"},
 
+		checked: {type: "boolean", defaultsTo: false}
+
 	}
 
 

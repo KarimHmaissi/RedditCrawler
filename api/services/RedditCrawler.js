@@ -8,6 +8,21 @@ var redditBottle = new Bottleneck(1, 2500);;
 
 var afterThisPost = "";
 
+var minLength = 200;
+var minUpvotes = 10;
+
+var createLink = function (redditLink) {
+	RedditLink.create(redditLink).then(function (savedLink) {
+		sails.log("saved link: " + savedLink.linkId);
+	}).catch(sails.log);
+};
+
+var saveLink = function (redditLink) {
+	RedditLink.save(redditLink).then(function (savedLink) {
+		// sails.log("saved link: " + savedLink.linkId);
+	}).catch(sails.log);
+};
+
 
 var gatherLinks = function (subreddit, count) {
 
@@ -25,46 +40,23 @@ var gatherLinks = function (subreddit, count) {
 	var savedLinks = [];
 
 
-	var saveLink = function (redditLink) {
-		RedditLink.create(redditLink).then(function (savedLink) {
-			sails.log("saved link: " + savedLink.linkId);
-		}).catch(sails.log);
-	};
-
 	return new Promise(function (fulfill, reject) {
 
-		
+		sails.log("adding in new link request");
 		redditBottle.submit(Request, apiCall, function (error, response, body) {
 			
 			if(!error && response.statusCode === 200) {
 
 				var parsedBody = JSON.parse(body);
 
-				// sails.log(parsedBody);
 
 				var i;
 				var length = parsedBody.data.children.length;
 
-				sails.log("length+++++   " + length);
+				sails.log("Got reponse from reddit server with " + length + "links");
+
 
 				for(i = 0; i < length; i++) {
-
-					// var rawLink = parsedBody.data.children[i];
-
-			/*		var handler = function (err, redditLinks) {
-						
-						if(redditLinks.length > 0) {
-							sails.log("already added link")
-						} else {
-
-						}
-
-					}*/
-
-					// RedditLink.find().where({linkId: parsedBody.data.children[i].data.id}).exec(handler);
-
-					sails.log(i);
-					// sails.log(parsedBody.data.children[i]);
 
 					var redditLink = {
 
@@ -78,10 +70,12 @@ var gatherLinks = function (subreddit, count) {
 					};
 
 					if(i === length - 1) {
-						afterThisPost = parsedBody.data.children[i].data.id;
+						var afterThisPost = parsedBody.data.children[i].data.id
+
+						sails.log("reached end adding after id: " + afterThisPost);
 					}
 
-					savedLinks.push(redditLink);
+					createLink.push(redditLink);
 
 					saveLink(redditLink);
 
@@ -101,9 +95,115 @@ var gatherLinks = function (subreddit, count) {
 };
 
 
-var gatherComments =function (subreddit) {
+
+var createComment = function (redditLink, commment) {
+
+	var commentToSave = {
+		permalink: redditLink.permalink,
+		linkId: redditlink.linkId,
+
+		commentId: comment.id,
+		body: comment.body,
+		ups: comment.ups,
+		name: comment.name 
+	};
+
+	Comment.create(commentToSave).then(function (savedComment) {
+	}).catch(sails.log);
+};
+
+
+var parseCommentReplies = function (redditLink, replies) {
+	var comments = replies.data.children;
+
+
+	var i;
+	var length = comments.length;
+
+	for(i = 0; i < length; i++) {
+		var comment = comments[i];
+
+		if(checkComment(comment.data)) {
+			sails.log("A replied comment has passed check and will be saved");
+			createComment(redditlink, comment.data);
+		}
+
+		// check if has comment children
+		if(!comment.data.replies === "") {
+			// comment has replies
+			sails.log("comment has replies");
+			parseCommentReplies(redditlink, comment.data.replies);
+		}
+
+	}
+	
+};
+
+var checkComment = function (commentData) {
+	if(commentData.ups > minUpvotes 
+		&& commentData.body.length > minLength) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+var gatherComments = function (redditlink) {
 	return new Promise(function (fulfill, reject) {
 
+
+		//download comments
+		redditBottle.submit(Request, apiCall, function (error, response, body) {
+
+			if(!error && response.statusCode === 200) {
+				var parsedBody = JSON.parse(body);
+
+				var commentsToParse = parsedBody[1].data.children;
+
+
+				var i;
+				var length = commentsToParse.length;
+
+
+				sails.log("Got reponse from reddit server with " + length + "root comments");
+
+				for(i = 0; i < length; i++) {
+
+					var parsedComment = commentsToParse[i];
+
+
+			
+					//check comment body length and upvotes
+					if(checkComment(parsedComment.data)) {
+						sails.log("comment has passed checks and will be saved");
+						createComment(redditlink, parsedComment.data);
+					}
+
+
+					// check if has comment children
+					if(parsedComment.data.replies === "") {
+						// comment has replies
+						sails.log("comment has replies");
+						parseCommentReplies(redditlink, parsedComment.data.replies);
+					}
+	
+
+					
+				}
+
+				redditLink.checked = true;
+				saveLink(redditlink);
+
+				fulfill();
+			}
+
+
+		});
+
+		
+
+
+		
 	});	
 };
 
@@ -112,18 +212,23 @@ var gatherComments =function (subreddit) {
 module.exports = {
 	crawlReddit: function (subreddit) {
 		
-		// return new Promise(function (fulfill, reject) {
+		return new Promise(function (fulfill, reject) {
 
-			//crawl links and save to db 
-			return gatherLinks("javascript", 100)
+			var handler = function (links) {
+				Promise.each(links, function (redditLink) {
+					return gatherComments(redditLink);
+
+				}).then(fulfill);
+			}
+
+			RedditLink.find().where({subreddit: subreddit}).limit(1).exec(handler);
+
+		});
 
 
-			//gather comments and save to db
 
 
-
-
-		// });
+		// return gatherLinks("javascript", 100);
 
 	}
 }
