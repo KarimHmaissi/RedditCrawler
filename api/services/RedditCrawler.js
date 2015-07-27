@@ -2,7 +2,7 @@ var _ = require("lodash");
 var Promise = require("bluebird");
 var Request = require("request");
 
-var bottleneck = require("bottleneck");
+var Bottleneck = require("bottleneck");
 
 var redditBottle = new Bottleneck(1, 2500);;
 
