@@ -60,7 +60,7 @@ var gatherLinks = function (subreddit, page) {
 
 					}
 
-					RedditLink.findOne().where({linkId: parsedBody.data.children[i].data.id}).exec(handler);
+					RedditLink.find().where({linkId: parsedBody.data.children[i].data.id}).exec(handler);
 
 					
 
