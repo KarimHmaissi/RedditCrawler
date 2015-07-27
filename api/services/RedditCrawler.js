@@ -221,8 +221,8 @@ module.exports = {
 				// }).then(fulfill);
 			sails.log(links);
 
-				// return gatherComments(links[0]);
-				fulfill("something");
+				return gatherComments(links[0]);
+				// fulfill("something");
 			}
 
 			RedditLink.find().then(handler).catch(sails.log);
