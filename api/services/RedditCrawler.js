@@ -10,7 +10,7 @@ var redditBottle = new Bottleneck(1, 2500);;
 var gatherLinks = function (subreddit, page) {
 
 
-	var apiCall = "http://reddit.com/r/" + subreddit + "/top.json#page=" + page;
+	var apiCall = "http://www.reddit.com/r/" + subreddit + "/top.json#page=" + page;
 
 	var savedLinks = [];
 
@@ -34,6 +34,8 @@ var gatherLinks = function (subreddit, page) {
 
 				var i;
 				var length = parsedBody.data.children.length;
+
+				sails.log("length+++++   " + length);
 
 				for(i = 0; i < length; i++) {
 
@@ -59,7 +61,7 @@ var gatherLinks = function (subreddit, page) {
 						linkId: parsedBody.data.children[i].data.id,
 						numComments: parsedBody.data.children[i].data.numComments,
 						permalink: parsedBody.data.children[i].data.permalink,
-						created: parsedBody.data.children[i].data.created,
+						created: new Date(parsedBody.data.children[i].data.created * 1000),
 						title: parsedBody.data.children[i].data.title,
 						subreddit: subreddit
 
