@@ -221,7 +221,7 @@ module.exports = {
 				// 	return gatherComments(redditLink);
 
 				// }).then(fulfill);
-			sails.log(links);
+			// sails.log(links);
 
 				return gatherComments(links[0]);
 				// fulfill("something");
