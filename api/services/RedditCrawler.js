@@ -37,7 +37,7 @@ var gatherLinks = function (subreddit, page) {
 
 					var rawLink = parsedBody.data.children[i];
 
-					var handler = function (redditLinks) {
+					var handler = function (err, redditLinks) {
 						
 						if(redditLinks.length < 0) {
 							sails.log("already added link")
