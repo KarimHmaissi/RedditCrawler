@@ -209,7 +209,9 @@ var gatherComments = function (redditLink) {
 				redditLink.checked = true;
 				saveLink(redditLink);
 
-				fulfill();
+				fulfill(parsedComment);
+			} else {
+				fulfill(error);
 			}
 
 
@@ -237,7 +239,7 @@ module.exports = {
 					sails.log("checking new link: " + redditLink.id);
 					return gatherComments(redditLink);
 
-				}).then(fulfill);
+				}).then(fulfill).catch(sails.log);
 			// sails.log(links);
 
 				// return gatherComments(links[0]);
