@@ -1,6 +1,14 @@
 module.exports = {
 
-	start: function () {
+	get: function (req, res) {
+		
+		RedditLink.find().exec(function (links) {
+			res.json(links)
+		});
+
+	}
+
+	start: function (req, res) {
 		
 
 		if(!typeof req.params.all().subreddit === string) {
