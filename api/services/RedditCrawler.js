@@ -221,10 +221,11 @@ module.exports = {
 				// }).then(fulfill);
 			sails.log(links);
 
-				return gatherComments(links[0]);
+				// return gatherComments(links[0]);
+				fulfill("something");
 			}
 
-			RedditLink.find().where().limit(1).exec(handler);
+			RedditLink.find().where().exec(handler);
 
 		});
 
