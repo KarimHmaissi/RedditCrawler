@@ -6,11 +6,21 @@ var Bottleneck = require("bottleneck");
 
 var redditBottle = new Bottleneck(1, 2500);;
 
+var afterThisPost = "";
 
-var gatherLinks = function (subreddit, page) {
 
+var gatherLinks = function (subreddit, count) {
 
-	var apiCall = "http://www.reddit.com/r/" + subreddit + "/top.json#page=" + page;
+	if(afterThisPost != "") {
+		var apiCall = "https://www.reddit.com/r/" + subreddit + "/top.json"  
+		+ "?sort=top&t=all&limit=" + count + "&count=" + count + "&after=" + afterThisPost;
+	} else {
+		var apiCall = "https://www.reddit.com/r/" + subreddit + "/top.json"  
+		+ "?sort=top&t=all&limit=" + count + "&count=" + count;
+	}
+
+	// https://www.reddit.com/r/javascript/top/.json?sort=top&t=all&limit=100
+	
 
 	var savedLinks = [];
 
@@ -67,6 +77,10 @@ var gatherLinks = function (subreddit, page) {
 
 					};
 
+					if(i === length - 1) {
+						afterThisPost = parsedBody.data.children[i].data.id;
+					}
+
 					savedLinks.push(redditLink);
 
 					saveLink(redditLink);
@@ -101,7 +115,7 @@ module.exports = {
 		// return new Promise(function (fulfill, reject) {
 
 			//crawl links and save to db 
-			return gatherLinks("javascript", 1)
+			return gatherLinks("javascript", 100)
 
 
 			//gather comments and save to db
