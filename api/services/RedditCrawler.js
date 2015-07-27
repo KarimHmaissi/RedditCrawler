@@ -17,7 +17,7 @@ var gatherLinks = function (subreddit, page) {
 
 	var saveLink = function (redditLink) {
 		RedditLink.create(link).exec(function (redditLink) {
-			
+			sails.log("saved link: " + redditLink.linkId);
 		});	
 	};
 
@@ -37,37 +37,37 @@ var gatherLinks = function (subreddit, page) {
 
 				for(i = 0; i < length; i++) {
 
-					var rawLink = parsedBody.data.children[i];
+					// var rawLink = parsedBody.data.children[i];
 
-					var handler = function (err, redditLinks) {
+			/*		var handler = function (err, redditLinks) {
 						
-						if(redditLinks.length < 0) {
+						if(redditLinks.length > 0) {
 							sails.log("already added link")
 						} else {
-							sails.log(i);
-							sails.log(parsedBody.data.children[i]);
 
-							var redditLink = {
-
-								linkId: parsedBody.data.children[i].data.id,
-								numComments: parsedBody.data.children[i].data.numComments,
-								permalink: parsedBody.data.children[i].data.permalink,
-								created: parsedBody.data.children[i].data.created,
-								title: parsedBody.data.children[i].data.title,
-								subreddit: subreddit
-
-							};
-
-							savedLinks.push(redditLink);
-
-							saveLink(redditLink);
 						}
 
-					}
+					}*/
 
-					RedditLink.find().where({linkId: parsedBody.data.children[i].data.id}).exec(handler);
+					// RedditLink.find().where({linkId: parsedBody.data.children[i].data.id}).exec(handler);
 
-					
+					sails.log(i);
+					sails.log(parsedBody.data.children[i]);
+
+					var redditLink = {
+
+						linkId: parsedBody.data.children[i].data.id,
+						numComments: parsedBody.data.children[i].data.numComments,
+						permalink: parsedBody.data.children[i].data.permalink,
+						created: parsedBody.data.children[i].data.created,
+						title: parsedBody.data.children[i].data.title,
+						subreddit: subreddit
+
+					};
+
+					savedLinks.push(redditLink);
+
+					saveLink(redditLink);
 
 				}
 
