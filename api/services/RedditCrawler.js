@@ -150,7 +150,7 @@ var checkComment = function (commentData) {
 
 var gatherComments = function (redditlink) {
 
-	var apiCall = "https://reddit.com" + redditlink.permalink;
+	var apiCall = "https://reddit.com" + redditlink.permalink + ".json";;
 
 	return new Promise(function (fulfill, reject) {
 
