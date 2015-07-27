@@ -116,6 +116,7 @@ var createComment = function (redditLink, comment) {
 var parseCommentReplies = function (redditLink, replies) {
 	var comments = replies.data.children;
 
+	sails.log(comments);
 
 	var i;
 	var length = comments.length;
