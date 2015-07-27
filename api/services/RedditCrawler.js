@@ -18,11 +18,9 @@ var createLink = function (redditLink) {
 };
 
 var saveLink = function (redditLink) {
-	redditLink.save(function (savedLink) {
+	redditLink.save(function (err, savedLink) {
 		sails.log("saved link: " + savedLink.linkId);
-	}), function (err) {
-		sails.log(err);
-	};
+	});
 };
 
 
