@@ -132,7 +132,7 @@ var parseCommentReplies = function (redditLink, replies) {
 		}
 
 		// check if has comment children
-		if(!comment.data.replies === "") {
+		if(typeof comment.data.replies === "object") {
 			// comment has replies
 			sails.log("comment has replies");
 			parseCommentReplies(redditLink, comment.data.replies);
