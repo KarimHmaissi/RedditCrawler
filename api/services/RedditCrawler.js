@@ -215,10 +215,12 @@ module.exports = {
 		return new Promise(function (fulfill, reject) {
 
 			var handler = function (links) {
-				Promise.each(links, function (redditLink) {
-					return gatherComments(redditLink);
+				// Promise.each(links, function (redditLink) {
+				// 	return gatherComments(redditLink);
 
-				}).then(fulfill);
+				// }).then(fulfill);
+
+				return gatherComments(links[0]);
 			}
 
 			RedditLink.find().where({subreddit: subreddit}).limit(1).exec(handler);
