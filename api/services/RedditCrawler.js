@@ -219,11 +219,12 @@ module.exports = {
 				// 	return gatherComments(redditLink);
 
 				// }).then(fulfill);
+			sails.log(links);
 
 				return gatherComments(links[0]);
 			}
 
-			RedditLink.find().where({subreddit: subreddit}).limit(1).exec(handler);
+			RedditLink.find().where().limit(1).exec(handler);
 
 		});
 
