@@ -212,23 +212,23 @@ var gatherComments = function (redditlink) {
 module.exports = {
 	crawlReddit: function (subreddit) {
 		
-		return new Promise(function (fulfill, reject) {
+		// return new Promise(function (fulfill, reject) {
 
-			var handler = function (links) {
-				Promise.each(links, function (redditLink) {
-					return gatherComments(redditLink);
+		// 	var handler = function (links) {
+		// 		Promise.each(links, function (redditLink) {
+		// 			return gatherComments(redditLink);
 
-				}).then(fulfill);
-			}
+		// 		}).then(fulfill);
+		// 	}
 
-			RedditLink.find().where({subreddit: subreddit}).limit(1).exec(handler);
+		// 	RedditLink.find().where({subreddit: subreddit}).limit(1).exec(handler);
 
-		});
-
-
+		// });
 
 
-		// return gatherLinks("javascript", 100);
+
+
+		return gatherLinks("javascript", 100);
 
 	}
 }
