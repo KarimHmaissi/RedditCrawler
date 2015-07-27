@@ -2,9 +2,9 @@ module.exports = {
 
 	get: function (req, res) {
 		sails.log("hit MainController/get");
-		RedditLink.find().exec(function (links) {
+		RedditLink.find().then(function (links) {
 			res.json(links)
-		});
+		}).catch(sails.log);
 
 	},
 
