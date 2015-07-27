@@ -11,7 +11,7 @@ module.exports = {
 	start: function (req, res) {
 		
 
-		if(!typeof req.params.all().subreddit === string) {
+		if(!typeof req.params.all().subreddit === "string") {
 			res.json("err");
 			return;
 		}
