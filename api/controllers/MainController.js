@@ -16,7 +16,7 @@ module.exports = {
 			return;
 		}
 
-		RedditCrawler.crawl(req.params.all().subreddit).then(function (result) {
+		RedditCrawler.crawlReddit(req.params.all().subreddit).then(function (result) {
 
 			res.json(result);
 
