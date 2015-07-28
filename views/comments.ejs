@@ -3,9 +3,9 @@
     <% comments.forEach(function(comment) { %>
         <li>
         	<div class="comment">
-
+				<p><%= comment.ups %>	upvotes</p>
         		<p><%= comment.body %></p>
-        		<a href="https://reddit.com/<%= comment.permalink %>/<%= comment.commentId %>">View on reddit</a>
+        		<a href="https://reddit.com/<%= comment.permalink %><%= comment.commentId %>">View on reddit</a>
         	</div>
         
         </li>
