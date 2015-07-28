@@ -37,7 +37,7 @@ module.exports.routes = {
   },
 
   'get /api/start/:subreddit': 'MainController.start',
-  'get /api/links/': 'MainController.getLinks'
+  'get /api/links/': 'MainController.getLinks',
   'get /comments/': 'MainController.getComments'
 
   /***************************************************************************
