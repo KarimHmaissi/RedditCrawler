@@ -1,11 +1,17 @@
 module.exports = {
 
-	get: function (req, res) {
+	getLinks: function (req, res) {
 		sails.log("hit MainController/get");
 		RedditLink.find().then(function (links) {
 			res.json(links)
 		}).catch(sails.log);
 
+	},
+
+	getComments: function (req, res) {
+		Comment.find().then(function (comments) {
+			res.render("views/comments", comments);
+		})
 	},
 
 	start: function (req, res) {
