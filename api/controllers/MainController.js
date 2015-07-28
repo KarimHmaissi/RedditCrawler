@@ -10,7 +10,7 @@ module.exports = {
 
 	getComments: function (req, res) {
 		Comment.find().then(function (comments) {
-			res.render("views/comments", comments);
+			res.render("comments.ejs", comments);
 		})
 	},
 
